@@ -1,48 +1,134 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 struct listNode_t{
-    int val;
+
+    int valor;
+
     struct listNode_t *next;
+
 }; typedef struct listNode_t lista_t;
 
-lista_t *head;
-lista_t *p, *q;
 
-/*
-====================
-ReverseList
-Esta função recebe o head de uma lista e percorre a mesma até o final para contar quantos valores existem na lista.
-Depois ela percorre essa lista com as variaveis (p) e (q) invertendo o numero de (p) com (q) até chegar no final da lista. 
-(Este processo é repetido X vezes o número de valores que esta lista contém).
-====================
-*/
+lista_t *cria_lista( void );
 
-struct listNode_t* ReverseList(struct listNode_t* head){
-    
-    int contadorDeValores = 0;
+void insereNoFim( int x, lista_t *lista );
 
-    if ( head == NULL ){
-        return head;
-    }
+void imprime ( lista_t *lista );
 
-    for( p = head; p -> next != NULL; p = p -> next ){
-        contadorDeValores++;
-    }
+void inverteLista( lista_t *lista);
 
-    p = head;
-    q = head -> next;
+int main(){
 
-    do{
-        ( q -> next != NULL );
-        p -> val = q -> val;
-        p = q;
-        q = q -> next;
-        contadorDeValores--;
-    }while( contadorDeValores != 0 );
+    lista_t *lista;
 
-    for( p = head -> next; p != NULL; p = p-> next ){
-        printf("%d\n", p -> val);
-    }
+    lista = cria_lista();
+
+    //insereNoFim( 1, lista ); insereNoFim( 2, lista ); //insereNoFim( 3, lista ); insereNoFim( 4, lista ); insereNoFim( 5, lista );
+
+    imprime( lista );
+
+    inverteLista ( lista );
+
+    imprime( lista );
+
 }
+
+lista_t *cria_lista( void ){
+
+    lista_t *inicio;
+
+	inicio = ( lista_t * ) malloc ( sizeof ( lista_t ) );
+
+	inicio -> next = NULL;
+
+	return inicio;
+
+}
+
+void insereNoFim( int x, lista_t *lista ){
+
+    lista_t *nova, *fim;
+
+    for ( fim = lista ; fim -> next != NULL; fim = fim -> next);
+
+    nova = ( lista_t* ) malloc ( sizeof( lista_t ) );
+
+    nova -> valor = x;
+
+    nova -> next = fim -> next;
+
+    fim-> next = nova;
+
+}
+
+void imprime ( lista_t *lista ){
+
+	lista_t *p;
+
+    if ( lista -> next == NULL ){
+
+        printf("Lista vazia");
+
+    } else {
+
+        for( p = lista -> next; p != NULL; p = p -> next ){
+
+		printf("%d ", p -> valor);
+        
+
+	    }
+        
+        printf("\n");
+    }	
+}
+
+void inverteLista( lista_t *lista){
+
+    lista_t *p, *q;
+
+    int contadorDeItens = -1, tempVariavel;
+
+    p = lista;
+
+    q = lista -> next;
+
+    for( p = lista; p -> next != NULL; p = p -> next ){
+
+        contadorDeItens++;
+
+        contadorDeItens = -1;
+
+    }
+    
+    do{
+        tempVariavel = p -> valor;
+
+        p -> valor = q -> valor;
+
+        q -> valor = tempVariavel;
+
+        p = q;
+
+        q = q -> next;
+        
+        contadorDeItens--;
+
+    }while( contadorDeItens > 0 );
+
+
+    
+}
+    
+
+    
+
+    
+
+    
+
+    /*for( p = head -> next; p != NULL; p = p-> next ){
+        printf("%d\n", p -> val);
+    }*/
 
 
