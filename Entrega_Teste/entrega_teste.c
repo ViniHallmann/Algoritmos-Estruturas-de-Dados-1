@@ -18,7 +18,7 @@ int main(){
     lista = Cria_lista();
 
     // Teste 1: 
-    //InsereNoFim( 1, lista ); InsereNoFim( 2, lista ); InsereNoFim( 3, lista ); InsereNoFim( 4, lista ); InsereNoFim( 5, lista );
+    InsereNoFim( 1, lista ); InsereNoFim( 2, lista ); InsereNoFim( 3, lista ); InsereNoFim( 4, lista ); InsereNoFim( 5, lista );
 
     //Teste 2:
     //InsereNoFim( 1, lista ); InsereNoFim( 2, lista );
