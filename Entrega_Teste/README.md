@@ -4,6 +4,8 @@
 Convenção usada: https://fabiensanglard.net/fd_proxy/doom3/CodeStyleConventions.pdf <br/>
 Link para o exercio no LeetCode (206. Reverse Linked List): https://leetcode.com/problems/reverse-linked-list/ <br/>
 
+### Observação: O arquivo resultados_erros_padroes.txt são os erros que o Dr. Memory detecta no Windows, independente do programa no qual ele está ánalisando, então estes erros podem aparecer no resultado final deste programa.
+
 O que funciona: O código funciona!<br/>
 O que não funciona: Vazamento de 16 bytes que eu não sei consertar.<br/>
 
