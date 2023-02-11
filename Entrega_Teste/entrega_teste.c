@@ -18,7 +18,7 @@ int main(){
     lista = Cria_lista();
 
     // Teste 1: 
-    InsereNoFim( 1, lista ); InsereNoFim( 2, lista ); InsereNoFim( 3, lista ); InsereNoFim( 4, lista ); InsereNoFim( 5, lista );
+    //InsereNoFim( 1, lista ); InsereNoFim( 2, lista ); InsereNoFim( 3, lista ); InsereNoFim( 4, lista ); InsereNoFim( 5, lista );
 
     //Teste 2:
     //InsereNoFim( 1, lista ); InsereNoFim( 2, lista );
@@ -66,22 +66,31 @@ void Imprime ( lista_t *lista ){
 
 void InverteLista( lista_t *lista){
 
-    lista_t *p, *q;
-    int contadorDeItens = -1, tempVariavel;
+    lista_t *p, *q, *tempVariavel;
+    int contadorDeItens = 0;
     p = lista;
     q = lista -> next;
 
     for( p = lista; p -> next != NULL; p = p -> next ){
         contadorDeItens++;
-        contadorDeItens = -1;
     }
     
-    do{
+    /*do{
         tempVariavel = p -> valor;
         p -> valor = q -> valor;
         q -> valor = tempVariavel;
         p = q;
         q = q -> next;
         contadorDeItens--;
-    }while( contadorDeItens > 0 );
+    }while( contadorDeItens > 0 );*/
+
+    while (p != NULL && q != NULL)
+    {
+        contadorDeItens--;
+        tempVariavel = q -> next;
+        q -> next = p;
+        p = q;
+        q = tempVariavel;
+    }
+    
 }
