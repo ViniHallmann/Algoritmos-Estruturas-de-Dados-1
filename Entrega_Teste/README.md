@@ -7,15 +7,15 @@ Link para o exercio no LeetCode (206. Reverse Linked List): https://leetcode.com
 ### Observação: O arquivo resultados_erros_padroes.txt são os erros que o Dr. Memory detecta no Windows, independente do programa no qual ele está ánalisando, então estes erros podem aparecer no resultado final deste programa.
 
 O que funciona: O código nao funciona!<br/>
-O que não funciona: Codigo inverte mas a repeticao nao para e possui vazamento de 16 bytes .<br/>
+O que não funciona: Codigo nao inverte apartir de 4 ou mais valores na lista  e possui vazamento de 16 bytes .<br/>
 
 ### Teste 1:<br/>
 Entrada: 1 2 3 4 5<br/>
-Saída: 5 2 3 4 1 5 2 3 4 1 5 2 3 4 1 (...)   <br/>
+Saída: 5 2 3 4 1    <br/>
 
 ### Teste 2:<br/>
 Entrada: 1 2 <br/>
-Saída:   2 1 2 1 2 1 2 1 2 1 (...)   <br/>
+Saída:   2 1   <br/>
 
 ### Teste 3: <br/>
 Entrada: ""<br/>

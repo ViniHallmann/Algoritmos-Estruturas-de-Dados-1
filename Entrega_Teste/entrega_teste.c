@@ -75,22 +75,22 @@ void InverteLista( lista_t *lista){
         contadorDeItens++;
     }
     
-    /*do{
+    do{
         tempVariavel = p -> valor;
         p -> valor = q -> valor;
         q -> valor = tempVariavel;
         p = q;
         q = q -> next;
         contadorDeItens--;
-    }while( contadorDeItens > 0 );*/
+    }while( contadorDeItens > 0 );
 
-    while (p != NULL && q != NULL)
+    /*while (p != NULL && q != NULL)
     {
         contadorDeItens--;
         tempVariavel = q -> next;
         q -> next = p;
         p = q;
         q = tempVariavel;
-    }
+    }*/
     
 }
