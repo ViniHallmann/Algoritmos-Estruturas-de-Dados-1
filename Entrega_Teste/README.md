@@ -11,11 +11,11 @@ O que não funciona: Codigo inverte mas a repeticao nao para e possui vazamento 
 
 ### Teste 1:<br/>
 Entrada: 1 2 3 4 5<br/>
-Saída: 5 2 3 4 1    <br/>
+Saída: 5 2 3 4 1 5 2 3 4 1 5 2 3 4 1 (...)   <br/>
 
 ### Teste 2:<br/>
 Entrada: 1 2 <br/>
-Saída:   2 1    <br/>
+Saída:   2 1 2 1 2 1 2 1 2 1 (...)   <br/>
 
 ### Teste 3: <br/>
 Entrada: ""<br/>
