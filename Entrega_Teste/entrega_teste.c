@@ -24,7 +24,14 @@ int main(){
 
     lista = cria_lista();
 
-    //insereNoFim( 1, lista ); insereNoFim( 2, lista ); //insereNoFim( 3, lista ); insereNoFim( 4, lista ); insereNoFim( 5, lista );
+    // Teste 1: 
+    insereNoFim( 1, lista ); insereNoFim( 2, lista ); insereNoFim( 3, lista ); insereNoFim( 4, lista ); insereNoFim( 5, lista );
+
+    //Teste 2:
+    //insereNoFim( 1, lista ); insereNoFim( 2, lista );
+
+    //Teste 3: Lista vazia
+
 
     imprime( lista );
 
@@ -38,7 +45,7 @@ lista_t *cria_lista( void ){
 
     lista_t *inicio;
 
-	inicio = ( lista_t * ) malloc ( sizeof ( lista_t ) );
+	inicio = ( lista_t* ) malloc ( sizeof ( lista_t ) );
 
 	inicio -> next = NULL;
 
@@ -116,19 +123,4 @@ void inverteLista( lista_t *lista){
 
     }while( contadorDeItens > 0 );
 
-
-    
 }
-    
-
-    
-
-    
-
-    
-
-    /*for( p = head -> next; p != NULL; p = p-> next ){
-        printf("%d\n", p -> val);
-    }*/
-
-
