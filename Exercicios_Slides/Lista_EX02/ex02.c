@@ -79,37 +79,41 @@ void AdicionarNome ( char** listaDeNomes ){
 
     printf( "\tDigite o nome:" );
     scanf( "%s", nome );
-    getchar();
 
     tamanhoPalavra = strlen(nome);
-    tamanhoNovo = tamanhoPalavra + strlen ( *listaDeNomes);
+    tamanhoNovo = tamanhoPalavra + strlen ( *listaDeNomes );
+
+    *listaDeNomes = ( char* ) realloc ( *listaDeNomes, tamanhoNovo + 1 );
 
     strcat(*listaDeNomes, nome);
     strcat(*listaDeNomes, ",");
-    *listaDeNomes = ( char* ) realloc ( *listaDeNomes, tamanhoNovo );
+    
 
 }
 
 void RemoverNome ( char** listaDeNomes ){
-    char *nomesSeparados, nome[100];
 
-    printf("Digite um nome para remover: ");
-    scanf("%s", nome);
+    char *nomesSeparados, nome[100], nomeASerRemovido[100];
+    int c, tamanhoNome;
+
+    printf( "Digite um nome para remover: " );
+    scanf( "%s", nome );
 
     nomesSeparados = strtok( *listaDeNomes, "," );
-    while (nomesSeparados)
-    {
-        printf("Teste: %s\n", nomesSeparados);
-        nomesSeparados = strtok(NULL, ".");
-        if (strcmp(nome, nomesSeparados) == 0){
-            int tamanhoNome = strlen(nomesSeparados);
-            *listaDeNomes = (char*) realloc(*listaDeNomes, strlen(*listaDeNomes) - tamanhoNome);
-        }
-    }
     
+    while ( nomesSeparados != NULL )
+    {
+        printf( "Nomes: %s\n", nomesSeparados ); 
+        nomesSeparados = strtok( NULL, "," );
+    }
+    /*if (strcmp(nome, nomesSeparados) == 0){
+            nomeASerRemovido = nomesSeparados;
+            tamanhoNome = strlen(nomeASerRemovido);
+            *listaDeNomes = (char*) realloc(*listaDeNomes, strlen(*listaDeNomes) - tamanhoNome);
+        }*/
+
 }
 
 void ListarNome ( char* listaDeNomes ){
     printf("Nomes: %s", listaDeNomes);
-
 }
