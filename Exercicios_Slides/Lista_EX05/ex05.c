@@ -2,7 +2,7 @@
 •O programa só deve sair quando o usuário disser que não deseja mais entrar com os dados de outra pessoa.
 •Antes de sair o programa deve apresentar, de forma organizada, os dados de todas as pessoas.*/
 #include <stdio.h>
-#include <Stdlib.h>
+#include <stdlib.h>
 
 struct pessoa {
     char name[30];
@@ -26,6 +26,7 @@ int main(){
         Insert ( list );
         printf("Continuar? (1 - Sim)/(0 - Nao): ");
         scanf("%d", &nBreak);
+        getchar();
         if (nBreak == 0){
             PrintList( list );
             break;
@@ -52,8 +53,10 @@ void Insert (pessoa *plist){
 
     printf("Digite o nome: ");
     ReadString(new -> name);
+    
     printf("Digite a idade de %s: ", new -> name);
     scanf("%d", &new -> age);
+
     printf("Digite o CPF: ");
     scanf("%d", &new -> CPF);
 
@@ -74,7 +77,7 @@ void PrintList(pessoa *plist){
     pessoa *printPessoa;
 
     for( printPessoa = plist -> next; printPessoa != NULL; printPessoa = printPessoa -> next){
-        printf("%s %d %d", printPessoa -> name, printPessoa -> age, printPessoa -> CPF);
+        printf("Nome:%s Idade:%d CPF:%d\n", printPessoa -> name, printPessoa -> age, printPessoa -> CPF);
 
     }
 }
