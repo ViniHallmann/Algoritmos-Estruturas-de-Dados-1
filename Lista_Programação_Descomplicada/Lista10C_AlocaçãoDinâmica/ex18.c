@@ -16,27 +16,32 @@ struct dados {
     char productName[30];
     int productCode;
     float productPrice;
-}; typedef struct dados dado;
+}; 
 
 int main(){
     //(a)
+
     char *vector = (char *) malloc (1025 * sizeof (char ));
     printf("%d", sizeof(*vector));
-
     free(vector);
 
     //(b)
     int **matriz;
     matriz = CreateMatriz();
     PrintMatriz(matriz);
-
+    for (int i = 0; i < 10; i++) {
+        free(matriz[i]);
+    }
     free(matriz);
+
     //(c)
-    
+    struct dados *vetorDeDados = ( struct dados*) malloc( 50*sizeof( struct dados ) );
+    free(vetorDeDados);
+
     //(d)
     CreateText();
-
-
+   
+    
 }
 
 int **CreateMatriz(){
@@ -55,22 +60,23 @@ int **CreateMatriz(){
 
     return matriz;
 }
-/*dado ***ProductVector(){
-    int ***vector, name, code, price;
 
-}*/
 
 char CreateText(){
 
-    char *text;
-    int lineCount = 100, i;
+    char **text; 
+    int i;
 
-    text = ( char * ) malloc ( 80 * sizeof( char ) );
+    text = ( char ** ) malloc ( 100 * sizeof( char *) );
 
-    for(i = 1; i < lineCount; i++){
-        text[i] = realloc( text, sizeof(text) + sizeof( char ) );
+    for(i = 1; i < 100; i++){
+        text[i] = (char *)malloc (80 * sizeof ( char) );
     }
-    
+
+    for (int i = 0; i < 100; i++) {
+        free(text[i]);
+    }
+    free(text);
 }
 
 char WriteText(){
