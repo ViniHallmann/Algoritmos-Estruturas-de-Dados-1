@@ -11,10 +11,15 @@ int **CriaTranspostaMatriz( int linha, int coluna, int **matriz, int **matrizTra
 
 int main(){
 
-    int n, m, **matriz, linha, coluna, **novaMatriz, **novaTransposta;
+    int **matriz, linha, coluna, **novaMatriz, **novaTransposta;
+
+    
 
     printf( "Digite o tamanhao da matriz N x M: " );
     scanf( "%d %d", &linha, &coluna );
+    
+    matriz = ( int** ) malloc( linha * sizeof ( int* ) );
+    novaTransposta = ( int** ) malloc( linha * sizeof ( int* ) );
 
     novaMatriz = CriaMatriz( linha, coluna, matriz );
     ImprimeMatriz( linha, coluna, novaMatriz );
@@ -27,7 +32,6 @@ int **CriaMatriz( int linha, int coluna, int **matriz ){
 
     int l, c;
 
-    matriz = ( int** ) malloc( linha * sizeof ( int* ) );
     for ( l = 0; l < linha; l++)
         matriz[l] = ( int* ) malloc ( coluna * sizeof ( int* ) );
 
@@ -60,7 +64,7 @@ int **CriaTranspostaMatriz( int linha, int coluna, int **matriz, int **matrizTra
 
     int l, c;
 
-    matrizTransposta = ( int** ) malloc( linha * sizeof ( int* ) );
+    
     for ( l = 0; l < linha; l++)
         matrizTransposta[l] = ( int* ) malloc ( coluna * sizeof ( int* ) );
 

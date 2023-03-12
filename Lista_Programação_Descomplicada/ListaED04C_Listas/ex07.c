@@ -16,20 +16,22 @@ int listSize(list *pList);
 void imprime(list *pList);
 
 int main(){
-    list *list;
-    list = criaLista();
+    list *listHead;
+    listHead = criaLista();
     for(;;){
         int number;
         scanf("%d", &number);
         if (number == 0)
             break;
-        insertElement(number,list);
+        insertElement(number,listHead);
         
     }
-    imprime (list);
-    printf("\n\n%d\n", listSize(list));
-    removeNElements(2,list);
-    imprime (list);
+    printf("\nLista:\n");
+    imprime (listHead);
+    //printf("\n\n%d\n", listSize(listHead));
+    removeNElements( 1, &listHead );
+    printf("\nLista atualizada: \n");
+    imprime (listHead);
 }
 
 list* criaLista(){
@@ -67,7 +69,14 @@ void removeNElements(int N, list **pList){
     list *routeList, *routeNext;
     int counter = 0;
 
-    routeList = *pList;
+    if (*pList == NULL || (*pList)->next == NULL) {
+        printf("Lista vazia ou com apenas um elemento.\n");
+        return;
+    } else {
+        printf("\nOperação realizada com sucesso!");
+    }
+
+    routeList = (*pList)-> next;
 
     while (counter < N && routeList != NULL){
 
