@@ -1,5 +1,5 @@
 /*Implementar em C um programa que utilize uma matriz com vetor de ponteiros e que ofereça as seguintes opções parao usuário:
-)Criar eredimencionaruma matriz m x n, onde n e m são fornecidos pelo usuário;
+)Criar e redimencionar uma matriz m x n, onde n e m são fornecidos pelo usuário;
 2) Realizar a leitura dos elementos da matriz;
 3) Fornecer a soma dos elementos da matriz;
 4) Retornar em um vetor (utilizando ponteiros) os elementos de uma determinada coluna da matriz;

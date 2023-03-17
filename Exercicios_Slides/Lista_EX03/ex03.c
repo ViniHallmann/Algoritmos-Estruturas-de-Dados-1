@@ -15,7 +15,7 @@ void ListarPessoas ( void* pBuffer );
 int main (){
 
     int escolha;
-    void *pBuffer = malloc(sizeof(void));
+    void *pBuffer = (void *) malloc(sizeof( void * ));
 
     for ( ;; ){
         escolha = Menu();
