@@ -1,8 +1,14 @@
-/*Lista 2 - Exercício 3
-• Faça uma agenda capaz de incluir, apagar, buscar e listar quantas pessoas o usuário desejar, porém, toda a informação incluída na agenda deve ficar num único lugar chamado: “void *pBuffer”.
-• Não pergunte para o usuário quantas pessoas ele vai incluir. Não pode alocar espaço para mais pessoas do que o necessário.
-• Cada pessoa tem nome[10], idade e telefone.
-• O trabalho que vale nota será uma continuação deste.*/
+/*Continuar a sua implementação da agenda (exercício 3) semana 1 dentro dos mesmo parâmetros, mas incluir o seguinte.
+Nenhuma variável pode ser declarada em todo o programa, somente ponteiros. Todos os dados do programa devem ser guardados dentro do pBuffer.
+Nem mesmo como parâmetro de função. Só ponteiros que apontam para dentro do pBuffer.
+Exemplo do que não pode: int c; char a; int v[10];  void Funcao(int parametro)
+Não pode usar struct em todo o programa.
+Usar fila ordenada (heap) para armazenar as pessoas em ordem alfabética sempre que o usuário incluir uma nova pessoa.
+Implementar a base de dados da agenda usando lista duplamente ligada
+Somente essa base de dados pode ficar fora do buffer principal, ou seja, pode usar um malloc para cada nodo.
+Seguir as orientações elaborados pelo monitor para código!
+Entregar link de um vídeo explicando o código e mostrando alguns testes e ao final o resultado do DrMemory.
+Vou perguntar no 1:1 sobre a sua implementação. Posso pedir para fazer alguma modificação no código na nossa conversa*/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -10,7 +16,7 @@
 int Menu ( void );
 void IncluirDados( void* pBuffer );
 void ListarPessoas ( void* pBuffer );
-void ApagarDados ( void *pBuffer);
+void ApagarDados ( void** pBuffer);
 
 int main (){
 
@@ -31,7 +37,7 @@ int main (){
             break;
             
         case 3:
-            ApagarDados ( pBuffer );
+            ApagarDados ( &pBuffer );
             break;
             
         case 4:
@@ -62,18 +68,18 @@ int Menu ( void ){
    } while ( escolha <= 0 || escolha > 5 );
     getchar();
     return escolha;
-
 }
 
 void IncluirDados( void* pBuffer ){
 
-    char nome[ 10 ], idadeString [ 2 ], telefoneString [ 9 ];
+    char nome[ 11 ], idadeString [ 2 ], telefoneString [ 9 ];
     int idade, telefone;
     printf( "Digite um nome: " );
-    //fgets ( nome, 10, stdin);
-    //getchar();
-    //gets ( nome );
-    scanf("%[^\n]s", nome);
+    
+    do{
+        scanf("%10[^\n]s", nome);
+        fflush(stdin);
+    } while ( strlen ( nome ) > 10);
     
     pBuffer = realloc( pBuffer, sizeof( pBuffer ) + sizeof( nome ) + 3);
     if ( pBuffer == NULL ) {
@@ -100,6 +106,8 @@ void IncluirDados( void* pBuffer ){
     sprintf (telefoneString, "%d", telefone);
     strcat( pBuffer, telefoneString );
     strcat( pBuffer, "," );
+
+    
 }
 
 void ListarPessoas ( void* pBuffer ){
@@ -107,23 +115,60 @@ void ListarPessoas ( void* pBuffer ){
     printf( "Lista de pessoas: %s", pBuffer );
 }
 
-void ApagarDados ( void *pBuffer){
-    char nome [ 10 ], *nomesNoBuffer;
+void ApagarDados ( void **pBuffer){
 
-    printf( "Digite o nome de quem deseja apagar os dados: " );
-    gets( nome );
+    char dados [ 10 ], *dadosNoBuffer, *copiaBuffer, *copiaBuffer2, *copiaParaPrintBuffer, *dadosDisponiveis, *novoBuffer = NULL, *dadosParaRemover = NULL;
+    int tamanhoDado = 0, tamanhoBuffer = 0;
 
-    nomesNoBuffer = strtok( pBuffer, "," ); // Separa os nomes no buffer em tokens e armazena eles na variável
+    copiaBuffer = ( char * ) malloc ( strlen ( *pBuffer ) + 1); // cria copia do pBuffer para poder manipular os valores do pBuffer
+    strcpy( copiaBuffer, *pBuffer );
+    copiaBuffer2 = (char*)malloc(strlen(*pBuffer) + 1);
+    strcpy( copiaBuffer2, *pBuffer);
+    copiaParaPrintBuffer = (char*)malloc(strlen(*pBuffer) + 1);
+    strcpy( copiaParaPrintBuffer, *pBuffer);
+
     
-    while ( nomesNoBuffer != NULL ) // enquanto a variável nao for vazia ela vai ficar imprimindo os tokens
-    {
-        printf( "Nomes: %s\n", nomesNoBuffer ); 
-        nomesNoBuffer = strtok( NULL, "," ); // Estou passando NULL por que eu quero continuar vendo a mesma string
+    dadosDisponiveis = strtok (copiaParaPrintBuffer, ",");
+    
+    printf("\nDados disponiveis: \n");
+    while (dadosDisponiveis != NULL) { // enquanto a variável nao for vazia ela vai ficar imprimindo os tokens
+        printf("Nomes: %s\n", dadosDisponiveis);
+        dadosDisponiveis = strtok(NULL, ","); // estou passando NULL por que eu quero continuar vendo a mesma string
     }
-    /*if (strcmp(nome, nomesSeparados) == 0){
-            nomeASerRemovido = nomesSeparados;
-            tamanhoNome = strlen(nomeASerRemovido);
-            *listaDeNomes = (char*) realloc(*listaDeNomes, strlen(*listaDeNomes) - tamanhoNome);
-        }*/
-    // Preciso fazer uma função que percorre o buffer, depois que encontrar o nome realocar o valor novo pro buffer 
+    printf( "Apagar Dados (nome.idade.telefone): " );
+    gets( dados );
+    
+    dadosNoBuffer = strtok( copiaBuffer, "," ); // Separa os nomes no buffer em tokens e armazena eles na variável
+    while ( dadosNoBuffer != NULL ) 
+    {
+        if ( strcmp( dados, dadosNoBuffer ) == 0 ){
+            dadosParaRemover = dadosNoBuffer;
+            tamanhoDado = strlen( dadosParaRemover );
+            tamanhoBuffer += tamanhoDado + 1; //tamanho do nome + o tamanho da virgula
+        } else {
+            tamanhoBuffer += strlen( dadosNoBuffer ) + 1;
+        }
+        dadosNoBuffer = strtok( NULL, "," ); 
+    }
+
+    if (dadosParaRemover != NULL){ // enquanto o nome a ser removido for diferente de nulo, ou seja, eu achei o nome que eu quero remover
+
+        novoBuffer = ( char * ) malloc( tamanhoBuffer - tamanhoDado );
+        novoBuffer[0] = '\0';
+
+        dadosNoBuffer = strtok( copiaBuffer2, ",");
+        while ( dadosNoBuffer != NULL )
+        {
+            if ( strcmp( dadosParaRemover, dadosNoBuffer ) != 0 ){ // enquanto a comparação der diferente de 0 quer dizer que o nome a ser removido ainda não foi achado no buffer
+                strcat( novoBuffer, dadosNoBuffer );
+                strcat( novoBuffer, ",");
+            }
+            dadosNoBuffer = strtok( NULL, "," );
+        }
+        free(*pBuffer);
+        *pBuffer = ( void *) malloc( strlen( novoBuffer ) + 1 );
+        strcpy( *pBuffer, novoBuffer);
+        
+    }
+    free(novoBuffer);
 }
