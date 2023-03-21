@@ -78,7 +78,7 @@ void IncluirDados(void **pBuffer){
 
     printf( "Digite um nome: " );
     do{
-        scanf( "%10[^\n]s", pNome ); // Esse scanf começa a contar do 0 ou do 1? pq se ele começa do 0 então ele ta pegando 11 char. VERIFICAR ISSO DEPOIS
+        scanf( "%10[^\n]s", pNome );
         fflush(stdin);
     } while ( strlen ( pNome ) > 10 );
 
@@ -107,20 +107,20 @@ void IncluirDados(void **pBuffer){
     free(pTelefoneString);
 }
 
-void ListarPessoas ( void* pBuffer ){
+void ListarPessoas ( void *pBuffer ){
 
-    char *copiaBuffer = ( char * ) malloc ( strlen ( pBuffer ) + 1); 
+    char *copiaBuffer = ( char * ) malloc ( strlen ( pBuffer ) + 1);
     strcpy( copiaBuffer, pBuffer );
+    copiaBuffer = strtok ( copiaBuffer, "," );
 
-    while (copiaBuffer != NULL){
-        printf ("%s\n", copiaBuffer);
-        copiaBuffer = strtok (NULL, ",");
+    printf( "Lista de Pessoas e dados: \n" );
+    while ( copiaBuffer != NULL ){
+        printf ( "%s\n", copiaBuffer );
+        copiaBuffer = strtok ( NULL, "," );
     }
-}
-/*void ListarPessoas ( void* pBuffer ){
 
-    printf( "Lista de pessoas: %s", pBuffer );
-}*/
+    free(copiaBuffer);
+}
 
 void ApagarDados ( void **pBuffer){
 
@@ -183,65 +183,9 @@ void ApagarDados ( void **pBuffer){
         free(*pBuffer);
         *pBuffer = ( void *) malloc( strlen( novoBuffer ) + 1 );
         strcpy( *pBuffer, novoBuffer);
-        
+
+        free(novoBuffer); //free(dados); free(dadosNoBuffer); free(copiaBuffer);free(copiaBuffer2);free(copiaParaPrintBuffer);free(dadosDisponiveis);free(dadosParaRemover); free(tamanhoDado);free(tamanhoBuffer);
     }
-    free(novoBuffer);
+    
 }
-/*
-void ApagarDados ( void **pBuffer){
-
-    char dados [ 10 ], *dadosNoBuffer, *copiaBuffer, *copiaBuffer2, *copiaParaPrintBuffer, *dadosDisponiveis, *novoBuffer = NULL, *dadosParaRemover = NULL;
-    int tamanhoDado = 0, tamanhoBuffer = 0;
-
-    copiaBuffer = ( char * ) malloc ( strlen ( *pBuffer ) + 1); // cria copia do pBuffer para poder manipular os valores do pBuffer
-    strcpy( copiaBuffer, *pBuffer );
-    copiaBuffer2 = (char*)malloc(strlen(*pBuffer) + 1);
-    strcpy( copiaBuffer2, *pBuffer);
-    copiaParaPrintBuffer = (char*)malloc(strlen(*pBuffer) + 1);
-    strcpy( copiaParaPrintBuffer, *pBuffer);
-
     
-    dadosDisponiveis = strtok (copiaParaPrintBuffer, ",");
-    
-    printf("\nDados disponiveis: \n");
-    while (dadosDisponiveis != NULL) { // enquanto a variável nao for vazia ela vai ficar imprimindo os tokens
-        printf("Nomes: %s\n", dadosDisponiveis);
-        dadosDisponiveis = strtok(NULL, ","); // estou passando NULL por que eu quero continuar vendo a mesma string
-    }
-    printf( "Apagar Dados (nome.idade.telefone): " );
-    gets( dados );
-    
-    dadosNoBuffer = strtok( copiaBuffer, "," ); // Separa os nomes no buffer em tokens e armazena eles na variável
-    while ( dadosNoBuffer != NULL ) 
-    {
-        if ( strcmp( dados, dadosNoBuffer ) == 0 ){
-            dadosParaRemover = dadosNoBuffer;
-            tamanhoDado = strlen( dadosParaRemover );
-            tamanhoBuffer += tamanhoDado + 1; //tamanho do nome + o tamanho da virgula
-        } else {
-            tamanhoBuffer += strlen( dadosNoBuffer ) + 1;
-        }
-        dadosNoBuffer = strtok( NULL, "," ); 
-    }
-
-    if (dadosParaRemover != NULL){ // enquanto o nome a ser removido for diferente de nulo, ou seja, eu achei o nome que eu quero remover
-
-        novoBuffer = ( char * ) malloc( tamanhoBuffer - tamanhoDado );
-        novoBuffer[0] = '\0';
-
-        dadosNoBuffer = strtok( copiaBuffer2, ",");
-        while ( dadosNoBuffer != NULL )
-        {
-            if ( strcmp( dadosParaRemover, dadosNoBuffer ) != 0 ){ // enquanto a comparação der diferente de 0 quer dizer que o nome a ser removido ainda não foi achado no buffer
-                strcat( novoBuffer, dadosNoBuffer );
-                strcat( novoBuffer, ",");
-            }
-            dadosNoBuffer = strtok( NULL, "," );
-        }
-        free(*pBuffer);
-        *pBuffer = ( void *) malloc( strlen( novoBuffer ) + 1 );
-        strcpy( *pBuffer, novoBuffer);
-        
-    }
-    free(novoBuffer);
-*/
