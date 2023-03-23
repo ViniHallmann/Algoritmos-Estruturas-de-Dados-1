@@ -21,8 +21,7 @@ void ApagarDados ( void **pBuffer);
 int main (){
 
     int escolha;
-    void *pBuffer = malloc(0);
-    strcpy( pBuffer, "");
+    void *pBuffer = NULL;
 
     for ( ;; ){
         escolha = Menu();
@@ -71,10 +70,12 @@ int Menu ( void ){
 }
 
 void IncluirDados(void **pBuffer){
+
     char *copiaBuffer;
     char *pNome = ( char * ) malloc ( sizeof ( char ) * 11);
     char *pIdadeString = ( char * ) malloc ( sizeof ( char ) * 3);
     char *pTelefoneString = ( char * ) malloc ( sizeof ( char ) * 10);
+    
 
     printf( "Digite um nome: " );
     do{
@@ -103,7 +104,8 @@ void IncluirDados(void **pBuffer){
         strcat ( ( char * ) *pBuffer + strlen( pIdadeString ), "." );
         strcat( ( char * ) *pBuffer, pTelefoneString );
         strcat ( ( char * ) *pBuffer + strlen( pTelefoneString ), "," );
-    } else {
+    } else { // ESSA PARTE DO CODIGO SO FUNCIONA SE ESTIVER NO MEIO DA LISTA
+            // PRECISO FAZER UM IF SE O DADO == NULL, ou seja, se estiver no final eu nao vou precisar usar o memmove...
         copiaBuffer = ( char * ) malloc ( strlen ( *pBuffer ) + 1); 
         strcpy( copiaBuffer, ( char * )*pBuffer ); // faco uma copia do pBuffer
         
@@ -115,11 +117,11 @@ void IncluirDados(void **pBuffer){
             }
             posicao += strlen ( dados ) + 1; // vai somando o tamanho dos dados comparados
             dados = strtok ( NULL, "," ); // isso aqui serve para o strtok continuar ate chegar na ultima virgula do copiaBuffer
-        }
-        //Depois q terminar a repeticao eu aloco a memoria anterior do pBuffer + a nova memoria dele (nome, idade e telefone)
+        } //Depois q terminar a repeticao eu aloco a memoria anterior do pBuffer + a nova memoria dele (nome, idade e telefone)
+       
         *pBuffer = realloc( *pBuffer, strlen(*pBuffer) + sizeof( pNome ) + sizeof( pIdadeString ) + sizeof( pTelefoneString ) + 4);
+
         //Acho que meu problema esta aqui, eu preciso mover para frente a minha string 
-        
         //tenho o meu destino como primeiro parametro o valor que aponta para o meu destino (que seria o meu valor mais o tamanho da posicao), 
         //o endereco de origem ( posicao ), 
         // o meu tamanho ( a diferenca entre o copiaBuffer e o posicao)
