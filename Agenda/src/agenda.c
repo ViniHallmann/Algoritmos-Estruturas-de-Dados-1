@@ -16,10 +16,11 @@ int main (){
         switch ( escolha )
         {
         case 1: 
-            incluirDados(&head, pegarDados());
+        pessoa = pegarDados();
+            incluirDados(&head, pessoa);
             break;
         case 2: 
-            listarDados(&head);
+            listarDados(head);
             break;
         case 3: 
             exit(0);
@@ -51,21 +52,21 @@ void *pegarDados (){
 
     void *pessoa;
     pessoa = malloc ( SIZE );
-    printf( "Digite o nome: " );
+    printf( "\tDigite o nome: " );
     scanf( "%s", ( char * )pessoa );
 
-    printf( "Digite a idade: ");
-    scanf( "%d", ( int * )(pessoa + sizeof ( char * ) * 10 ));
+    printf( "\tDigite a idade: ");
+    scanf( "%d", ( int * )((char*)pessoa + sizeof ( char * ) * 10 ));
 
-    printf( "Digite o telefone: ");
-    scanf( "%d", ( int * )(pessoa +  sizeof ( char * ) * 10  + sizeof ( int * ) ));
+    printf( "\tDigite o telefone: ");
+    scanf( "%d", ( int * )((char*)pessoa +  sizeof ( char * ) * 10  + sizeof ( int * ) ));
 
     pessoa += sizeof ( char * ) * 10 + sizeof ( int *) * 2; // andei 18 bytes ate chegar no final
     *( int *) pessoa = 0; // aponto para pessoa PREV
     pessoa += sizeof(int); // ando o tamanho do int
     *( int * ) pessoa = 0; // aponto para pessoa PROX
     pessoa -= sizeof ( char * ) * 10 + sizeof ( int *) * 3; // andei 22 bites, agora eu preciso voltar isso para apontar para o inicio da pessoa
-    return &pessoa;
+    return pessoa;
     // OBS. eu posso criar um ponteiro que aponta para o valor inicial e depois eu so coloco esse ponteiro em pessoa e retorno o inicio da pessoa
 }
 void *incluirDados ( void *head, void *pPessoa ){
@@ -85,7 +86,7 @@ void *incluirDados ( void *head, void *pPessoa ){
 
 void listarDados ( void *head ){
 
-    if ( head == NULL ) {
+    if ( head == 0 ) {
         printf("lista vazia\n");
         return;
     } 
