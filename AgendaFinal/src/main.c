@@ -25,7 +25,8 @@
 void *incluirDados( void *head, void *pPessoa );
 void *pegarDados  ();
 void listarDados  ( void *head);
-void buscarDados  ( void *head, void *pPessoa );
+//void buscarDados  ( void *head, void *pPessoa );
+void buscarDados  ( void *head );
 void menu         ( void * head );
 
 
@@ -38,9 +39,10 @@ int main (){
 void menu ( void *head ){
     for ( ; ; ){
         printf( "\n\t\tMENU\n" );
-        printf( "\t1)Inclur nome;\n" );
+        printf( "\t1)Incluir nome;\n" );
         printf( "\t2)Listar pessoas;\n" );
-        printf( "\t3)Sair.\n" );
+        printf( "\t3)Buscar pessoa;\n" );
+        printf( "\t4)Sair.\n" );
         printf( "\tDigite sua escolha: " );
 
         switch ( getchar () )
@@ -54,7 +56,8 @@ void menu ( void *head ){
             getchar();
             break;
         case '3': 
-            buscarDados( head, pegarDados() );
+            //buscarDados( head, pegarDados() );
+            buscarDados( head );
             getchar();
             break;
         case '4': 
@@ -133,7 +136,7 @@ void *incluirDados ( void *head, void *pPessoa ){
 void listarDados ( void *head ){
     //LISTA OS DADOS DA LISTA
     if ( head == 0 ) {
-        printf("\n\tlista vazia\n");
+        printf("\n\tAgenda vazia\n");
         return;
     } 
     void *dados = head;
@@ -145,6 +148,25 @@ void listarDados ( void *head ){
         dados = *( void ** )( dados + PROX );
     }
 }
-void buscarDados ( void *head, void *pPessoa ){
+void buscarDados ( void *head ){
+    void *buscaHead = head;
+    void *pPessoa = malloc ( NOME_SIZE );
 
+    printf( "\tDigite o nome: " );
+    scanf( "%s", ( char * )pPessoa );
+
+    if ( head == 0 ) {
+        printf("\n\tAgenda vazia\n");
+        return;
+    } 
+    while ( *( void ** )buscaHead  != NULL ){
+        if ( buscaHead != NULL){
+            if ( strcmp ( ( char* ) buscaHead, ( char* ) pPessoa ) == 0 ){
+                printf("\n\t%s esta na agenda. O telefone de %s: %d\n", ( char * )buscaHead, ( char * )buscaHead, *( int * )( ( char * )buscaHead + TELEFONE_SIZE )  );
+                break;
+            }
+            buscaHead = *( void ** )( buscaHead + PROX );
+            // se o nome nao estiver na agenda eu posso chamar a funcao incluir dados aqui? so uma ideia.   
+        }
+    }
 }
