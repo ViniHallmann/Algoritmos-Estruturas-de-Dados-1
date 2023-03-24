@@ -23,16 +23,19 @@
 
 // Chamada das funções
 void *incluirDados( void *head, void *pPessoa );
-void *pegarDados ();
-void listarDados ( void *head);
-void menu ();
+void *pegarDados  ();
+void listarDados  ( void *head);
+void buscarDados  ( void *head, void *pPessoa );
+void menu         ( void * head );
+
 
 // Funções
 int main (){
-    void *head = 0;
+    void *head = malloc(0);
+    head = 0;
     menu( head );
 }
-void menu ( void *head){
+void menu ( void *head ){
     for ( ; ; ){
         printf( "\n\t\tMENU\n" );
         printf( "\t1)Inclur nome;\n" );
@@ -51,6 +54,10 @@ void menu ( void *head){
             getchar();
             break;
         case '3': 
+            buscarDados( head, pegarDados() );
+            getchar();
+            break;
+        case '4': 
             exit( 0 );
             getchar();
             break;
@@ -63,12 +70,12 @@ void menu ( void *head){
 void *pegarDados (){
     //PEGA OS DADOS DA PESSOA QUE VAI SER INSERIDA NO pBUFFER
     void *pessoa = malloc ( TOTAL_PESSOA_SIZE );
-
     printf( "\tDigite o nome: " );
     scanf( "%s", ( char * )pessoa );
 
     printf( "\tDigite a idade: ");
     scanf( "%d", ( int * )((char*)pessoa + IDADE_SIZE));
+
     while ( *( int * )((char*)pessoa + IDADE_SIZE)  < 0 || *( int * )((char*)pessoa + IDADE_SIZE) > 99){
         printf("\n\tERRO. Tente novamente!\n");
         printf( "\n\tDigite a idade: ");
@@ -77,10 +84,6 @@ void *pegarDados (){
 
     printf( "\tDigite o telefone: ");
     scanf("%d", ( int * )((char*)pessoa + TELEFONE_SIZE));
-    /*do{            
-        scanf("%9s",( (char*)pessoa + TELEFONE_SIZE));
-
-    } while (strlen((char*)pessoa + TELEFONE_SIZE) != 9);*/
 
     return pessoa;
 }
@@ -105,36 +108,34 @@ void *incluirDados ( void *head, void *pPessoa ){
         // PERCORRE O BUFFER
         while ( *( void ** )(novoHead + PROX) != NULL ) {
             if ( novoHead != NULL){
-                //novoHead = *( void ** )novoHead ;
                 novoHead = *( void ** )( novoHead + PROX );
+                //INSERIR NO MEIO
+                if (  strcmp ( ( char* ) novoHead, ( char* ) pPessoa ) > 0){
+                    void *tempPREV = *(void **)(novoHead + PREV);
+                    void *tempPROX = novoHead;
+                    *( void ** )( pPessoa + PREV ) = tempPREV;
+                    *( void ** )( pPessoa + PROX ) = novoHead;
+                    *( void ** )( tempPROX + PREV) = pPessoa;
+                    *( void ** )( tempPREV + PROX ) = pPessoa;
+                    return head;
+                }
             }
         }
         //INSERIR NO FINAL
-        if ( * ( void ** )( novoHead + PROX ) == NULL && strcmp ( ( char* ) head, ( char* ) pPessoa ) < 0){
+        if ( * ( void ** )( novoHead + PROX ) == NULL && strcmp ( ( char* ) novoHead, ( char* ) pPessoa ) < 0){
             *( void ** )( pPessoa + PREV ) = novoHead;
             *( void ** )( novoHead + PROX ) = pPessoa;
             *( void ** )( pPessoa + PROX ) = NULL;
             return head;
         }
-        //INSERIR NO MEIO
-        if (* ( void ** )( novoHead + PROX ) != NULL && strcmp ( ( char* ) head, ( char* ) pPessoa ) > 0){
-            void *tempPREV = (novoHead + PREV);
-            void *tempPROX = (tempPREV + PROX);
-            *( void ** )( pPessoa + PREV ) = tempPREV;
-            *( void ** ) tempPROX = pPessoa;
-            *( void ** )( novoHead + PREV ) = pPessoa;
-            *( void ** )( pPessoa + PROX ) = novoHead;
-            return head;
-        }
     }
 }
-
 void listarDados ( void *head ){
+    //LISTA OS DADOS DA LISTA
     if ( head == 0 ) {
         printf("\n\tlista vazia\n");
         return;
     } 
-
     void *dados = head;
     printf( "\n\tLISTA DE DADOS \n" );
     while ( dados != NULL) { 
@@ -142,6 +143,8 @@ void listarDados ( void *head ){
         printf( "\tIdade: %d\n", *( int * )( ( char * )dados + IDADE_SIZE ) );
         printf( "\tTelefone: %d\n", *( int * )( ( char * )dados + TELEFONE_SIZE ) );
         dados = *( void ** )( dados + PROX );
-        
     }
+}
+void buscarDados ( void *head, void *pPessoa ){
+
 }
