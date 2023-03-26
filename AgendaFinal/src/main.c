@@ -35,6 +35,7 @@ void Menu          ( void *head );
 int main (){
     void *head = malloc( 0 );
     head = 0;
+    
     Menu( head );
 }
 
@@ -63,7 +64,8 @@ void Menu ( void *head ){
             BuscarDados( head );
             getchar();
             break;
-        case '4': 
+        case '4':
+            ListarDados( head );
             head = RemoverDados ( head, PegarDados() );
             getchar();
             break;
@@ -92,6 +94,10 @@ PegarDados
 void *PegarDados (){
 
     void *pessoa = malloc ( TOTAL_PESSOA_SIZE );
+    if ( pessoa == NULL ){
+        printf( "ERRO na alocação...." );
+        return 0;
+    }
 
     printf( "\tDigite o nome: " );
     scanf( "%s", ( char * )pessoa );
@@ -171,7 +177,7 @@ void ListarDados ( void *head ){
     } 
     void *dados = head;
     //Lista os dados 
-    printf( "\n\tLISTA DE DADOS \n" );
+    printf( "\n\tLISTA DE DADOS NA AGENDA\n" );
     while ( dados != NULL ) { 
         printf( "\tNome: %s\n", ( char * )dados );
         printf( "\tIdade: %d\n", *( int * )( ( char * )dados + IDADE_SIZE ) );
@@ -186,51 +192,44 @@ BuscarDados
 ====================
 */
 void BuscarDados ( void *head ){
-    void *buscaHead = head;
+    void *pBusca = head;
     void *pPessoa = malloc ( NOME_SIZE );
+
+    if ( pPessoa == NULL ){
+        printf( "ERRO na alocação...." );
+        return;
+    }
 
     printf( "\tDigite o nome: " );
     scanf( "%s", ( char * )pPessoa );
 
     if ( head == 0 ) {
-        printf( "\n\tAgenda vazia\n" );
+        printf( "\n\tAgenda vazia...\n" );
         return;
     }
     
-    while ( *( void ** )buscaHead  != NULL ){ //Percorre a lista
-        if ( buscaHead != NULL){  
-            if ( strcmp ( ( char* ) buscaHead, ( char* ) pPessoa ) == 0 ){ //Compara o valor do dado com o valor na lista e vê se os dois são iguais, se sim, imprime os dados, se não, continua percorrendo a lista
-                printf("\n\t'%s' está na agenda. O telefone de %s é: %d\n", ( char * )buscaHead, ( char * )buscaHead, *( int * )( ( char * )buscaHead + TELEFONE_SIZE )  );
+    while ( *( void ** )pBusca  != NULL ){ //Percorre a lista
+        if ( pBusca != NULL){  
+            if ( strcmp ( ( char* ) pBusca, ( char* ) pPessoa ) == 0 ){ //Compara o valor do dado com o valor na lista e vê se os dois são iguais, se sim, imprime os dados, se não, continua percorrendo a lista
+                printf("\n\t'%s' está na agenda. O telefone de %s é: %d\n", ( char * )pBusca, ( char * )pBusca, *( int * )( ( char * )pBusca + TELEFONE_SIZE )  );
                 break;
             }
-            buscaHead = *( void ** )( buscaHead + PROX );   
+            pBusca = *( void ** )( pBusca + PROX );   
         }
     }
-    /*
-    void *pessoasEncontradas = malloc ( TOTAL_PESSOA_SIZE );
-    while ( *( void ** )buscaHead  != NULL ){
-        if ( buscaHead != NULL){  
-            if ( strcmp ( ( char* ) buscaHead, ( char* ) pPessoa ) == 0 ){ //Compara o valor do dado com o valor na lista e vê se os dois são iguais, se sim, imprime os dados, se não, continua percorrendo a lista
-                pessoasEncontradas = IncluirDados( pessoasEncontradas, buscaHead );
-            }
-            buscaHead = *( void ** )( buscaHead + PROX );   
-        }
-    }
-    ListarDados ( pessoasEncontradas );
-    free(pessoasEncontradas);
-    */
 }
 /*
 ====================
 RemoverDados
     REMOVE O DADO DE UMA PESSOA NO BUFFER
 ====================
-*/
+*/ 
 void *RemoverDados ( void *head, void *dadosPessoa ){
+    void *novaLista = NULL;
     
     if ( head == 0 ) {
         printf( "\n\tAgenda vazia\n" );
-        return;
+        return NULL;
     }
     void *dadosParaRemover = dadosPessoa;
     //REMOVER O PRIMEIRO ELEMENTO
@@ -245,38 +244,28 @@ void *RemoverDados ( void *head, void *dadosPessoa ){
         free( head );
         printf( "\n\tDados removidos!\n" );
         return novoHead;
-    }
-    else {
-        //PERCORRE O BUFFER
-        void *novoHead = head;
-        while ( *( void ** )( novoHead + PROX ) != NULL ) {
-            if ( novoHead != NULL){
-                //REMOVE NO MEIO
-                if ( strcmp ( *( char ** )novoHead, *( char ** ) dadosParaRemover ) == 0 ){
-                    void *nodoAnterior =  *( void ** )( novoHead + PREV );
-                    void *nodoAFrente =  *( void ** )( novoHead + PROX );
-                    * ( void ** )( nodoAnterior + PROX ) = *( void ** )( novoHead + PROX );
-                    * ( void ** )( nodoAFrente + PREV ) = nodoAnterior;
-                    free( novoHead );
-                    printf( "\n\tDados removidos!\n" );
-                    return head;
-                }
-                novoHead = *( void ** )( novoHead + PROX );
+    } else {
+        while ( *(void**)head != NULL && strcmp ( ( char * )head, ( char * ) dadosParaRemover ) != 0){
+            void *pessoa = head;
+            head = head + PROX;
+            if ( *(void**)head != NULL){
+                head = *( void** )head;  
             }
+            novaLista = IncluirDados( novaLista, pessoa);  
         }
-        //REMOVER NO FIM
-        if ( *( void ** )( novoHead + PROX ) == NULL && strcmp ( *(char ** )novoHead, *(char ** ) dadosParaRemover ) == 0 ){
-            void *nodoAnterior =  *( void ** )( novoHead + PREV );
-            *( void ** )( nodoAnterior + PROX ) = NULL;
-            free( novoHead );
-            printf( "\n\tDados removidos!\n" );
-            return head;
+        if (strcmp ( ( char * )head, ( char * ) dadosParaRemover ) == 0){
+            void *nodoAnterior =  *( void ** )( head + PREV );
+            void *nodoAFrente =  *( void ** )( head + PROX );
+            *( void ** )( nodoAnterior + PROX ) = *( void ** )( head + PROX );
+            if (nodoAFrente != NULL) {
+                *( void ** )( nodoAFrente + PREV ) = nodoAnterior;
+            }
+            free( head );
+            head = nodoAFrente;
         }
-        else {
-            printf( "\n\tDado não cadastrado na agenda. Tente novamente com outro dado!\n" );
-            return head;
-        }
+        
     }
+    return novaLista;
 }
 /*
 ====================
@@ -296,4 +285,5 @@ void *LimparLista( void *head ){
         head = proxHead;
     }
     printf("\n\tLista limpa!\n");
+    return NULL;
 }
