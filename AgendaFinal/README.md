@@ -2,7 +2,7 @@
 ## Vinícius Hallmann - M1
 ### Trabalho Agenda
 Convenção usada: https://fabiensanglard.net/fd_proxy/doom3/CodeStyleConventions.pdf <br/>
-
+Link do video de explicação: https://youtu.be/41ghtpo2zWI <br/>
 Funciona conforme o que foi pedido para ser desenvolvido. <br/>
 Erros: Vazamento de 26 ( tamanho de uma pessoa ) bytes na função de pegar dados<br/>
 
