@@ -88,3 +88,4 @@ void ListarPessoas ( void* pBuffer ){
 
     printf( "\n\tLista de pessoas:\n %s", pBuffer );
 }
+// O RESTO DO CÓDIGO ESTÁ NA PASTA AGENDA FINAL// TESTES E CÓDIGOS ANTIGOS
