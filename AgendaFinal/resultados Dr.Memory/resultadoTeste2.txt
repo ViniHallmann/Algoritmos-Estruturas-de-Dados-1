@@ -1,0 +1,73 @@
+Dr. Memory version 2.5.0 build 0 built on Oct 18 2021 03:10:43
+Windows version: WinVer=105;Rel=2009;Build=19044;Edition=Core
+Dr. Memory results for pid 11968: "main.exe"
+Application cmdline: ""D:\Arquivos\Programação\Prática Algoritmos e Estruturas de Dados 1\AgendaFinal\src\main.exe""
+Recorded 124 suppression(s) from default C:\Program Files (x86)\Dr. Memory\bin\suppress-default.txt
+
+Error #1: UNINITIALIZED READ: reading register eax
+# 0 KERNELBASE.dll!FindNextFileW 
+# 1 KERNELBASE.dll!FindNextFileA 
+# 2 .text                              [../../../src/gcc-6.3.0/libgcc/config/i386/cygwin.S:184]
+# 3 __mingw_glob                       [../../../src/gcc-6.3.0/libgcc/config/i386/cygwin.S:184]
+# 4 _setargv                           [D:\Arquivos\Programação\Prática Algoritmos e Estruturas de Dados 1\AgendaFinal\src/main.c:291]
+# 5 .text   
+# 6 mainCRTStartup
+# 7 ntdll.dll!__RtlUserThreadStart
+Note: @0:00:00.332 in thread 14408
+Note: instruction: cmp    %eax $0x0000001a
+
+Error #2: UNINITIALIZED READ: reading register eax
+# 0 KERNELBASE.dll!FindNextFileW 
+# 1 KERNELBASE.dll!FindNextFileA 
+# 2 .text                              [../../../src/gcc-6.3.0/libgcc/config/i386/cygwin.S:184]
+# 3 __mingw_glob                       [../../../src/gcc-6.3.0/libgcc/config/i386/cygwin.S:184]
+# 4 _setargv                           [D:\Arquivos\Programação\Prática Algoritmos e Estruturas de Dados 1\AgendaFinal\src/main.c:291]
+# 5 .text   
+# 6 mainCRTStartup
+# 7 ntdll.dll!__RtlUserThreadStart
+Note: @0:00:00.334 in thread 14408
+Note: instruction: data16 mov    %cx -> 0x00000234(%ebx,%eax,2)
+
+Error #3: UNINITIALIZED READ: reading register eax
+# 0 KERNELBASE.dll!FindNextFileW 
+# 1 KERNELBASE.dll!FindNextFileA 
+# 2 .text                              [../../../src/gcc-6.3.0/libgcc/config/i386/cygwin.S:184]
+# 3 __mingw_glob                       [../../../src/gcc-6.3.0/libgcc/config/i386/cygwin.S:184]
+# 4 _setargv                           [D:\Arquivos\Programação\Prática Algoritmos e Estruturas de Dados 1\AgendaFinal\src/main.c:291]
+# 5 .text   
+# 6 mainCRTStartup
+# 7 ntdll.dll!__RtlUserThreadStart
+Note: @0:00:00.343 in thread 14408
+Note: instruction: test   %eax %eax
+
+Error #4: LEAK 26 direct bytes 0x01221f50-0x01221f6a + 0 indirect bytes
+# 0 replace_malloc               [d:\a\drmemory\drmemory\common\alloc_replace.c:2580]
+# 1 PegarDados                   [D:\Arquivos\Programação\Prática Algoritmos e Estruturas de Dados 1\AgendaFinal\src/main.c:95]
+# 2 Menu                         [D:\Arquivos\Programação\Prática Algoritmos e Estruturas de Dados 1\AgendaFinal\src/main.c:55]
+# 3 main                         [D:\Arquivos\Programação\Prática Algoritmos e Estruturas de Dados 1\AgendaFinal\src/main.c:38]
+
+===========================================================================
+FINAL SUMMARY:
+
+DUPLICATE ERROR COUNTS:
+	Error #   1:      6
+	Error #   2:      6
+	Error #   4:      2
+
+SUPPRESSIONS USED:
+
+ERRORS FOUND:
+      0 unique,     0 total unaddressable access(es)
+      3 unique,    13 total uninitialized access(es)
+      0 unique,     0 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+      1 unique,     2 total,     52 byte(s) of leak(s)
+      0 unique,     0 total,      0 byte(s) of possible leak(s)
+ERRORS IGNORED:
+      1 potential error(s) (suspected false positives)
+         (details: C:\Users\vinic\AppData\Roaming\Dr. Memory\DrMemory-main.exe.11968.000\potential_errors.txt)
+      8 unique,     8 total,   5309 byte(s) of still-reachable allocation(s)
+         (re-run with "-show_reachable" for details)
+Details: C:\Users\vinic\AppData\Roaming\Dr. Memory\DrMemory-main.exe.11968.000\results.txt
