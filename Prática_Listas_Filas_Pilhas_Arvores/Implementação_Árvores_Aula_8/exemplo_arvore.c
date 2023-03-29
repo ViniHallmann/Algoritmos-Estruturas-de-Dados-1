@@ -6,7 +6,7 @@ typedef struct no{
     struct no *esquerda, *direita;
 }NoArv;
 
-NoAr* inserir(NoArv *raiz, int num){
+NoArv* inserir(NoArv *raiz, int num){
     if (raiz == NULL){
         NoArv*aux = malloc(sizeof(NoArv));
         aux -> valor = num;
