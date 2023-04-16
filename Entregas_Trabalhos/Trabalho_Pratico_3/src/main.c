@@ -59,8 +59,8 @@ int CalcularDiametro ( NoArvore *raiz ){
     }
     alturaEsquerda = CalcularAltura ( raiz -> esquerda );
     alturaDireita = CalcularAltura ( raiz -> direita );
-    diametroEsquerdo = CalcularDiametro ( raiz -> esquerda ) ;
-    diametroDireito = CalcularDiametro ( raiz -> direita ) ;
+    diametroEsquerdo = CalcularDiametro ( raiz -> esquerda );
+    diametroDireito = CalcularDiametro ( raiz -> direita );
 
     diametro = alturaDireita + alturaEsquerda;
     
@@ -87,7 +87,7 @@ NoArvore *LimparArvore ( NoArvore *raiz ){
 
 int main( int argc, char const *argv[] ){
     NoArvore *arvore = NULL;
-    
+
     //arvore = InserirNumero ( arvore, 5);
     //arvore = InserirNumero ( arvore, 6);
     //arvore = InserirNumero ( arvore, 7); 
