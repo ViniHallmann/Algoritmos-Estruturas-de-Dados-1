@@ -3,8 +3,8 @@
 
 Convenção usada: https://fabiensanglard.net/fd_proxy/doom3/CodeStyleConventions.pdf <br/>
 
-O código desenvolvido em sala de aula funciona alguns testes <br/>
-
+O código desenvolvido em sala de aula funciona alguns testes. Consegui arrumar os erros e agora tudo funciona.<br/>
+### Testes feitos na aula 
 ### Teste 1:<br/>
 Entrada: " 5 6 3 4 2" <br/>
 Saída: 3          // caminho [2 3 5 6] ou [4 3 5 6]<br/>
