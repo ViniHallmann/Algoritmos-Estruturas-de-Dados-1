@@ -15,7 +15,7 @@ int main(){
     }
     printf("\n");
     for ( i = 1; i < TAM; i++ ){
-        indice = i;
+        indice = i; 
         copia = vetorDesordenado[i];
         while ( indice > 0 && vetorDesordenado[indice - 1] > copia ){
             vetorDesordenado[indice] = vetorDesordenado [indice -1];
